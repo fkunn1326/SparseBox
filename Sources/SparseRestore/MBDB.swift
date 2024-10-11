@@ -148,6 +148,7 @@ struct MBDBRecord {
         buffer.writeInteger(flags, endianness: .big, as: UInt8.self)
         
         buffer.writeInteger(UInt8(properties.count), endianness: .big, as: UInt8.self)
+        print("[Properties]")
         for (name, value) in properties {
             print("name: \(name), value: \(value)")
             buffer.writeInteger(UInt16(name.count), endianness: .big, as: UInt16.self)
