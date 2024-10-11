@@ -106,7 +106,6 @@ struct MBDBRecord {
                 value = buffer.readString(length: value_len)!
             }
             properties[name] = value
-            print("name: \(name), value: \(value)")
         }
     }
     
@@ -150,6 +149,7 @@ struct MBDBRecord {
         
         buffer.writeInteger(UInt8(properties.count), endianness: .big, as: UInt8.self)
         for (name, value) in properties {
+            print("name: \(name), value: \(value)")
             buffer.writeInteger(UInt16(name.count), endianness: .big, as: UInt16.self)
             buffer.writeString(name)
             buffer.writeInteger(UInt16(value.count), endianness: .big, as: UInt16.self)
