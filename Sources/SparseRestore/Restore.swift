@@ -43,7 +43,7 @@ struct Restore {
                     owner: 33,
                     group: 33,
                     xattrs: ["": ""]
-                  )
+                  ),
                   access(bundlePath.appending("/embedded.mobileprovision"), F_OK) == 0
             else { continue }
             print("Found \(bundleID): \(bundlePath)")
