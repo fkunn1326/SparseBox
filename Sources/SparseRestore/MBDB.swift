@@ -106,6 +106,7 @@ struct MBDBRecord {
                 value = buffer.readString(length: value_len)!
             }
             properties[name] = value
+            print("name: \(name), value: \(value)")
         }
     }
     
