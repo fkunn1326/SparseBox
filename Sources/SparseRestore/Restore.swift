@@ -38,7 +38,16 @@ struct Restore {
                   // Find all apps containing mobileprovision
                   // while this is not 100% accurate, it ensures this is applied to all sideloaded apps
                   access(bundlePath.appending("/embedded.mobileprovision"), F_OK) == 0
-            else { continue }
+            else {
+                let _ = Directory(
+                    path: "",
+                    domain: "SysContainerDomain-../../../../../../../..\(bundlePath.hasPrefix("/private/") ? String(bundlePath.dropFirst(8)) : bundlePath)",
+                    owner: 33,
+                    group: 33,
+                    xattrs: ["": ""]
+                )
+                continue
+            }
             print("Found \(bundleID): \(bundlePath)")
             files.append(Directory(
                 path: "",
