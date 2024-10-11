@@ -213,8 +213,12 @@ Thanks to:
         if ready() {
             Task {
                 mbdb = Restore.createBackupFiles(files: generateFilesToRestore())
+                lastError = "mbdb succeed"
+                showErrorAlert.toggle()
                 taskRunning = false
                 path.append("ApplyChanges")
+                lastError = "applychanges"
+                showErrorAlert.toggle()
             }
         } else {
             lastError = "minimuxer is not ready. Ensure you have WiFi and WireGuard VPN set up."
