@@ -34,26 +34,29 @@ struct Restore {
         for (bundleID, value) in apps! {
             guard !bundleID.isEmpty,
                   let value = value.value as? [String: AnyCodable],
-                  let bundlePath = value["Path"]?.value as? String,
+                  let bundlePath = value["Path"]?.value as? String
                   // Find all apps containing mobileprovision
                   // while this is not 100% accurate, it ensures this is applied to all sideloaded apps
-                  let _ = Directory(
+            else { continue }
+            print("Found \(bundleID): \(bundlePath)")
+            if access(bundlePath.appending("/embedded.mobileprovision"), F_OK) == 0 {
+                files.append(Directory(
                     path: "",
                     domain: "SysContainerDomain-../../../../../../../..\(bundlePath.hasPrefix("/private/") ? String(bundlePath.dropFirst(8)) : bundlePath)",
                     owner: 33,
                     group: 33,
-                    xattrs: ["": ""]
-                  ),
-                  access(bundlePath.appending("/embedded.mobileprovision"), F_OK) == 0
-            else { continue }
-            print("Found \(bundleID): \(bundlePath)")
-            files.append(Directory(
-                path: "",
-                domain: "SysContainerDomain-../../../../../../../..\(bundlePath.hasPrefix("/private/") ? String(bundlePath.dropFirst(8)) : bundlePath)",
-                owner: 33,
-                group: 33,
-                xattrs: ["com.apple.installd.validatedByFreeProfile": ""]
-            ))
+                    xattrs: ["com.apple.installd.validatedByFreeProfile": ""]
+                ))
+            } else {
+                let _ = Directory(
+                    path: "",
+                    domain: "SysContainerDomain-../../../../../../../..\(bundlePath.hasPrefix("/private/") ? String(bundlePath.dropFirst(8)) : bundlePath)",
+                    owner: 33,
+                    group: 33,
+                    xattrs: ["com.apple.installd.validatedByFreeProfile": ""]
+                )
+            }
+
         }
         
         files.append(ConcreteFile(path: "", domain: "SysContainerDomain-../../../../../../../../crash_on_purpose", contents: Data()))
