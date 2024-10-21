@@ -139,7 +139,7 @@ class MobileDevice {
         instproxy_client_free(client)
     }
     
-    static func listApplications(device: idevice_t, type: string) -> AnyCodableDictionary? {
+    static func listApplications(device: idevice_t, type: String) -> AnyCodableDictionary? {
         var applicationDic: AnyCodableDictionary = [:]
         var fullyDecoded = false
         requireInstallProxyService(device: device) { inst_client in
