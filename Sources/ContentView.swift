@@ -120,10 +120,11 @@ struct ContentView: View {
                         let apps = MobileDevice.listApplications(udid: udid)
                         let systemApps = MobileDevice.listApplications(udid: udid, type: "System")
 
-                        logText += "apps\n"
-                        logText += "\(apps)\n"
-                        logText += "systemApps\n"
-                        logText += "\(systemApps)\n"
+                        logText = ""
+                        logText += "deviceList \(deviceList)\n"
+                        logText += "udid \(udid)\n"
+                        logText += "apps \(apps)\n"
+                        logText += "systemApps \(systemApps)\n"
                     }
                 } footer: {
                     Text(logText)
