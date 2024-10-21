@@ -29,7 +29,7 @@ struct Restore {
         }
         let udid = deviceList.first!
         let apps = MobileDevice.listApplications(udid: udid)
-        let systemApps = MobileDevice.listApplications(udid: udid, type="System")
+        let systemApps = MobileDevice.listApplications(udid: udid, type: "System")
 
         print(apps)
         print(systemApps)
