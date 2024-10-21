@@ -29,6 +29,10 @@ struct Restore {
         }
         let udid = deviceList.first!
         let apps = MobileDevice.listApplications(udid: udid)
+        let systemApps = MobileDevice.listApplications(udid: udid, type="System")
+
+        print(apps)
+        print(systemApps)
         
         var files = [BackupFile]()
         for (bundleID, value) in apps! {

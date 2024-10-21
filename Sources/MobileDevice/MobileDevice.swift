@@ -139,13 +139,13 @@ class MobileDevice {
         instproxy_client_free(client)
     }
     
-    static func listApplications(device: idevice_t) -> AnyCodableDictionary? {
+    static func listApplications(device: idevice_t, type: string) -> AnyCodableDictionary? {
         var applicationDic: AnyCodableDictionary = [:]
         var fullyDecoded = false
         requireInstallProxyService(device: device) { inst_client in
             guard let inst_client else { return }
             let options: [String: Any] = [
-                "ApplicationType": "User",
+                "ApplicationType": type,
                 "ReturnAttributes": [
                     "CFBundleIdentifier",
                     "Path",
@@ -212,12 +212,13 @@ class MobileDevice {
     }
     
     static func listApplications(
-        udid: String
+        udid: String,
+        type: String = "User"
     ) -> AnyCodableDictionary? {
         var result: AnyCodableDictionary?
         MobileDevice.requireDevice(udid: udid) { device in
             guard let device else { return }
-            result = listApplications(device: device)
+            result = listApplications(device: device, type: type)
         }
         return result
     }
