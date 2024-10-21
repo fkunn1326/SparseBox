@@ -23,6 +23,7 @@ struct ContentView: View {
     @State var taskRunning = false
     @State var lastError: String?
     @State var path = NavigationPath()
+    @State var logText: String = ""
     var body: some View {
         NavigationStack(path: $path) {
             Form {
@@ -111,6 +112,22 @@ struct ContentView: View {
                         .disabled(cacheExtra["+3Uf0Pm5F8Xy7Onyvko0vA"] as! String != "iPhone")
                 } footer: {
                     Text("Override user interface idiom to iPadOS, so you could use all iPadOS multitasking features on iPhone. Gives you the same capabilities as TrollPad, but may cause some issues.")
+                }
+                Section {
+                    Button("Change icons") {
+                        let deviceList = MobileDevice.deviceList()
+                        let udid = deviceList.first!
+                        let apps = MobileDevice.listApplications(udid: udid)
+                        let systemApps = MobileDevice.listApplications(udid: udid, type: "System")
+
+                        logText += "apps\n"
+                        logText += "\(apps)\n"
+                        logText += "systemApps\n"
+                        logText += "\(systemApps)\n"
+                    }
+                } footer: {
+                    Text(logText)
+                        .textSelection(.enabled)
                 }
                 Section {
                     Toggle("Reboot after finish restoring", isOn: $reboot)
