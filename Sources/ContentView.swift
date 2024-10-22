@@ -115,22 +115,32 @@ struct ContentView: View {
                 }
                 Section {
                     Button("Change icons") {
-                        let deviceList = MobileDevice.deviceList()
-                        let udid = deviceList.first!
-                        let apps = MobileDevice.listApplications(udid: udid)
-                        let systemApps = MobileDevice.listApplications(udid: udid, type: "System")
+                        Task {
+                            taskRunning = true
+                            if ready() {
+                                mbdb = Restore.createBypassAppLimit()
+                                let deviceList = MobileDevice.deviceList()
+                                let udid = deviceList.first!
+                                let apps = MobileDevice.listApplications(udid: udid)
+                                let systemApps = MobileDevice.listApplications(udid: udid, type: "System")
 
-                        logText = ""
+                                logText = ""
 
-                        for (bundleID, value) in apps! {
-                            guard !bundleID.isEmpty,
-                                let value = value.value as? [String: AnyCodable],
-                                let bundlePath = value["Path"]?.value as? String
-                            else { continue }
-                            let f_ok = access(bundlePath.appending("/Assets.car"), F_OK) == 0
-                            let r_ok = access(bundlePath.appending("/Assets.car"), R_OK) == 0
+                                for (bundleID, value) in apps! {
+                                    guard !bundleID.isEmpty,
+                                        let value = value.value as? [String: AnyCodable],
+                                        let bundlePath = value["Path"]?.value as? String
+                                    else { continue }
+                                    let f_ok = access(bundlePath.appending("/Assets.car"), F_OK) == 0
+                                    let r_ok = access(bundlePath.appending("/Assets.car"), R_OK) == 0
 
-                            logText += "\(bundleID) \(f_ok) \(r_ok)"
+                                    logText += "\(bundleID) \(f_ok) \(r_ok) \n"
+                                }
+                            } else {
+                                lastError = "minimuxer is not ready. Ensure you have WiFi and WireGuard VPN set up."
+                                showErrorAlert.toggle()
+                            }
+                            taskRunning = false
                         }
                     }
                     Text(logText)
