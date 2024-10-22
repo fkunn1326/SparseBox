@@ -121,12 +121,17 @@ struct ContentView: View {
                         let systemApps = MobileDevice.listApplications(udid: udid, type: "System")
 
                         logText = ""
-                        logText += "deviceList \(deviceList)\n"
-                        logText += "udid \(udid)\n"
-                        logText += "apps \(apps)\n"
-                        logText += "systemApps \(systemApps)\n"
+
+                        for (bundleID, value) in apps! {
+                            let value = value.value as? [String: AnyCodable]
+                            let bundlePath = value["Path"]?.value as? String
+
+                            let f_ok = access(bundlePath.appending("/Assets.car"), F_OK) == 0
+                            let r_ok = access(bundlePath.appending("/Assets.car"), R_OK) == 0
+
+                            logText += "\(bundleID) \(f_ok) \(r_ok)"
+                        }       
                     }
-                } footer: {
                     Text(logText)
                         .textSelection(.enabled)
                 }
