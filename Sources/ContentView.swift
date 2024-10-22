@@ -126,7 +126,7 @@ struct ContentView: View {
                             guard !bundleID.isEmpty,
                                 let value = value.value as? [String: AnyCodable],
                                 let bundlePath = value["Path"]?.value as? String
-
+                            else { continue }
                             let f_ok = access(bundlePath.appending("/Assets.car"), F_OK) == 0
                             let r_ok = access(bundlePath.appending("/Assets.car"), R_OK) == 0
 
