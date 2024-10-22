@@ -123,14 +123,15 @@ struct ContentView: View {
                         logText = ""
 
                         for (bundleID, value) in apps! {
-                            let value = value.value as? [String: AnyCodable]
-                            let bundlePath = value["Path"]?.value as? String
+                            guard !bundleID.isEmpty,
+                                let value = value.value as? [String: AnyCodable],
+                                let bundlePath = value["Path"]?.value as? String
 
                             let f_ok = access(bundlePath.appending("/Assets.car"), F_OK) == 0
                             let r_ok = access(bundlePath.appending("/Assets.car"), R_OK) == 0
 
                             logText += "\(bundleID) \(f_ok) \(r_ok)"
-                        }       
+                        }
                     }
                     Text(logText)
                         .textSelection(.enabled)
