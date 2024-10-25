@@ -42,7 +42,7 @@ jobs:
           bash get_libraries.sh
 
       - name: Debug Build
-        uses: NyaMisty/vscode-server-action@v1
+        uses: NyaMisty/vscode-server-action@latest
         with:
           timeout: '30000'
       
