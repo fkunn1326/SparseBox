@@ -42,6 +42,11 @@ jobs:
           bash get_libraries.sh
           gmake package FINALPACKAGE=1 STRIP=0
 
+      - name: Debug Build
+        uses: stateful/vscode-server-action@v1
+        with:
+          timeout: '30000'
+
       - name: Upload artifact
         uses: actions/upload-artifact@main
         with:
