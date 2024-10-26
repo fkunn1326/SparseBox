@@ -33,13 +33,6 @@ jobs:
         uses: dhinakg/procursus-action@main
         with:
           packages: coreutils make xz ldid
-          
-      - name: Prepare
-        run: |
-          export THEOS=theos
-
-          git submodule update --init
-          bash get_libraries.sh
 
       - name: Debug Build
         if: github.event_name == 'workflow_dispatch'
@@ -48,7 +41,12 @@ jobs:
           timeout: '30000'
 
       - name: Build
-        run: gmake package FINALPACKAGE=1 STRIP=0
+        run: |
+          export THEOS=theos
+
+          git submodule update --init
+          bash get_libraries.sh
+          gmake package FINALPACKAGE=1 STRIP=0
 
       - name: Upload artifact
         uses: actions/upload-artifact@main
