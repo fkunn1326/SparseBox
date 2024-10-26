@@ -57,7 +57,10 @@ SparseBox_FILES = \
   Sources/SwiftNIO/NIOCore/CircularBuffer.swift \
   Sources/SwiftNIO/NIOCore/ByteBuffer-int.swift \
   Sources/SwiftNIO/NIOPosix/PointerHelpers.swift \
-  Sources/ContentView.swift
+  Sources/MainView.swift \
+  Sources/SubView.swift \
+  Sources/ContentView.swift \
+
 SparseBox_FRAMEWORKS = UIKit
 SparseBox_CFLAGS = -fcommon -fobjc-arc
 SparseBox_SWIFTFLAGS = -Iinclude -import-objc-header include/minimuxer-Bridging-Header.h

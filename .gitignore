@@ -4,3 +4,5 @@ packages/
 /Resources/Frameworks
 /Resources/*.dylib
 /lib
+theos/
+.vscode-test/
