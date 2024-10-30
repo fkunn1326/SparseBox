@@ -79,6 +79,11 @@ struct MainView: View {
                     Toggle("Crash Detection (might not work)", isOn: bindingForMGKeys(["HCzWusHQwZDea6nNhaKndw"]))
                     Toggle("Dynamic Island (17.4+, might not work)", isOn: bindingForMGKeys(["YlEtTtHlNesRBMal1CqRaA"]))
                         .disabled(requiresVersion(17, 4))
+                } header: {
+                    Text("MobileGestalt")
+                }
+
+                Section {
                     Toggle("Internal Storage info", isOn: bindingForMGKeys(["LBJfwOEzExRxzlAnSuI7eg"]))
                     Toggle("Metal HUD for all apps", isOn: bindingForMGKeys(["EqrsVvjcYDdxHBiQmGhAWw"]))
                     Toggle("Stage Manager", isOn: bindingForMGKeys(["qeaj75wk3HF4DwQ8qbIi7g"]))
@@ -86,8 +91,6 @@ struct MainView: View {
                     if let isSE = UIDevice.perform(Selector("_hasHomeButton")) {
                         Toggle("Tap to Wake (iPhone SE)", isOn: bindingForMGKeys(["yZf3GTRMGTuwSV/lD7Cagw"]))
                     }
-                } header: {
-                    Text("MobileGestalt")
                 }
                 Section {
                     Picker("Device model", selection:$productType) {

@@ -13,4 +13,17 @@
 #include "libimobiledevice/service.h"
 #include "libimobiledevice-glue/utils.h"
 
+#include "privatekits/CoreSVG.h"
+#include "privatekits/CSIBitmapWrapper.h"
+#include "privatekits/CSIGenerator.h"
+#include "privatekits/CUIRenditionKey.h"
+#include "privatekits/structs.h"
+#include "privatekits/CUIThemeRendition.h"
+#include "privatekits/CUIStructuredThemeStore.h"
+#include "privatekits/CUICommonAssetStorage.h"
+#include "privatekits/CUINamedLookup.h"
+#include "privatekits/CUICatalog.h"
+#include "privatekits/CoreUI.h"
+
+
 int idevicebackup2_main(int argc, char *argv[]);
