@@ -3,6 +3,11 @@ name: Build
 on:
   push:
   workflow_dispatch:
+    inputs:
+      debug:
+        type: boolean
+        default: true
+        description: debug
 
 jobs:
   build:
@@ -35,7 +40,7 @@ jobs:
           packages: coreutils make xz ldid
 
       - name: Debug Build
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' && inputs.debug
         uses: NyaMisty/vscode-server-action@main
         with:
           timeout: '30000'
