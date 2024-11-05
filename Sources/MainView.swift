@@ -182,6 +182,8 @@ Thanks to:
                     LogView(mbdb: mbdb!, reboot: reboot)
                 } else if view == "BypassAppLimit" {
                     LogView(mbdb: mbdb!, reboot: false)
+                } else if view == "Symlink" {
+                    LogView(mbdb: mbdb!, reboot: false)
                 }
             }
             .navigationTitle("SparseBox")
