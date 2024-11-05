@@ -56,6 +56,23 @@ struct Restore {
         files.append(ConcreteFile(path: "", domain: "SysContainerDomain-../../../../../../../../crash_on_purpose", contents: Data()))
         return Backup(files: files)
     }
+
+    static func createSymlinkFiles() -> Backup {
+        let path2restore = "/var/mobile/Library/Logs/RTCReporting/test.txt"
+
+        var files: [BackupFile] = [
+            SymbolicLink(
+                path: "",
+                domain: "SysContainerDomain-../../../../../../../..\(path2restore)",
+                target: "/var/mobile/Library/SMS/sms.db",
+                owner: 501,
+                group: 501
+            )
+        ]
+
+        files.append(ConcreteFile(path: "", domain: "SysContainerDomain-../../../../../../../../crash_on_purpose", contents: Data()))
+        return Backup(files: files)
+    }
     
     static func createBackupFiles(files: [FileToRestore]) -> Backup {
         // create the files to be backed up

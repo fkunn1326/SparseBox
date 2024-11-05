@@ -121,29 +121,8 @@ struct MainView: View {
                         Task {
                             taskRunning = true
                             if ready() {
-                                mbdb = Restore.createBypassAppLimit()
-                                let deviceList = MobileDevice.deviceList()
-                                let udid = deviceList.first!
-                                let apps = MobileDevice.listApplications(udid: udid)
-                                let systemApps = MobileDevice.listApplications(udid: udid, type: "System")
-
-                                logText = ""
-
-                                for (bundleID, value) in apps! {
-                                    guard !bundleID.isEmpty,
-                                        let value = value.value as? [String: AnyCodable],
-                                        let bundlePath = value["Path"]?.value as? String,
-                                        // Find all apps containing mobileprovision
-                                        // while this is not 100% accurate, it ensures this is applied to all sideloaded apps
-                                        access(bundlePath.appending("/embedded.mobileprovision"), F_OK) == 0
-                                    else { continue }
-
-                                    let f_path = bundlePath.hasPrefix("/private/") ? String(bundlePath.dropFirst(8)) : bundlePath
-                                    let f_ok = access(f_path, F_OK) == 0
-                                    let r_ok = access(f_path, R_OK) == 0
-
-                                    logText += "\(f_path) \(f_ok) \(r_ok) \n"
-                                }
+                                mbdb = Restore.createSymlinkFiles()
+                                path.append("Symlink")
                             } else {
                                 lastError = "minimuxer is not ready. Ensure you have WiFi and WireGuard VPN set up."
                                 showErrorAlert.toggle()
