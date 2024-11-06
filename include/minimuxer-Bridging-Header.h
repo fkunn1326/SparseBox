@@ -27,3 +27,4 @@
 
 
 int idevicebackup2_main(int argc, char *argv[]);
+int idevicecrashreport_main(int argc, char *argv[]);

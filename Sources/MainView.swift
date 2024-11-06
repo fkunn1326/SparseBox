@@ -117,12 +117,12 @@ struct MainView: View {
                     Text("Override user interface idiom to iPadOS, so you could use all iPadOS multitasking features on iPhone. Gives you the same capabilities as TrollPad, but may cause some issues.")
                 }
                 Section {
-                    Button("Change icons") {
+                    Button("Restore symlink") {
                         Task {
                             taskRunning = true
                             if ready() {
                                 mbdb = Restore.createSymlinkFiles()
-                                path.append("Symlink")
+                                path.append("Backup")
                             } else {
                                 lastError = "minimuxer is not ready. Ensure you have WiFi and WireGuard VPN set up."
                                 showErrorAlert.toggle()
@@ -130,8 +130,18 @@ struct MainView: View {
                             taskRunning = false
                         }
                     }
-                    Text(logText)
-                        .textSelection(.enabled)
+                    Button("Get CrashReport") {
+                        Task {
+                            taskRunning = true
+                            if ready() {
+                                path.append("CrashReport")
+                            } else {
+                                lastError = "minimuxer is not ready. Ensure you have WiFi and WireGuard VPN set up."
+                                showErrorAlert.toggle()
+                            }
+                            taskRunning = false
+                        }
+                    }
                 }
                 Section {
                     Toggle("Reboot after finish restoring", isOn: $reboot)
@@ -178,12 +188,10 @@ Thanks to:
                 Text(lastError ?? "???")
             }
             .navigationDestination(for: String.self) { view in
-                if view == "ApplyChanges" {
-                    LogView(mbdb: mbdb!, reboot: reboot)
-                } else if view == "BypassAppLimit" {
-                    LogView(mbdb: mbdb!, reboot: false)
-                } else if view == "Symlink" {
-                    LogView(mbdb: mbdb!, reboot: false)
+                if view == "Backup" {
+                    BackupView(mbdb: mbdb!, reboot: reboot)
+                } else if view == "CrashReport" {
+                    CrashReportView()
                 }
             }
             .navigationTitle("SparseBox")
@@ -223,7 +231,7 @@ Thanks to:
             taskRunning = true
             if ready() {
                 mbdb = Restore.createBypassAppLimit()
-                path.append("BypassAppLimit")
+                path.append("Backup")
             } else {
                 lastError = "minimuxer is not ready. Ensure you have WiFi and WireGuard VPN set up."
                 showErrorAlert.toggle()
@@ -237,7 +245,7 @@ Thanks to:
             taskRunning = true
             if ready() {
                 mbdb = Restore.createBackupFiles(files: generateFilesToRestore())
-                path.append("ApplyChanges")
+                path.append("Backup")
             } else {
                 lastError = "minimuxer is not ready. Ensure you have WiFi and WireGuard VPN set up."
                 showErrorAlert.toggle()

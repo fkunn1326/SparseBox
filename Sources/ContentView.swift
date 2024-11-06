@@ -1,5 +1,7 @@
 import SwiftUI
 
+let logPipe = Pipe()
+
 struct ContentView: View {
 	var body: some View {
 		TabView {
